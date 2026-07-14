@@ -51,11 +51,20 @@ The interface is available in English, German, Japanese, and Italian. It follows
 the system language on first run and can be changed at any time from the Language
 menu.
 
-## Requirements
+## What you need to run it
 
-- FFmpeg's `ffprobe` (version 4.0 or newer). Set the path in the app, or with the
-  `FFPROBE_PATH` environment variable. The app also finds `ffprobe` if it is on
-  your PATH.
+- **Windows 10 or 11, 64-bit.**
+- **FFmpeg's `ffprobe`** (version 4.0 or newer). This is the only external tool
+  the app uses, and it is not bundled (FFmpeg is a separate project). Download
+  FFmpeg, then do one of:
+  - point the app at `ffprobe.exe` using the field at the top of the window, or
+  - set the `FFPROBE_PATH` environment variable, or
+  - put `ffprobe.exe` on your `PATH` and the app finds it automatically.
+
+You do **not** need Qt or Python installed. A release build (made with
+`windeployqt`, or a release zip) already ships the Qt runtime DLLs next to
+`AudioBitrateGUI.exe`, so it runs on a clean machine. Just unzip and run the
+exe, then set the ffprobe path once.
 
 ## Building from source
 
@@ -97,4 +106,4 @@ compiles it and embeds the result, so a rebuild is all that is needed.
 
 ## License
 
-MIT.
+MIT. See [LICENSE](LICENSE).
