@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ main, master ]
     tags: [ 'v*' ]
   pull_request:
   workflow_dispatch:
@@ -25,7 +25,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Qt 6
+      # Windows and Linux use the prebuilt Qt from aqt. The macOS aqt binaries
+      # still reference Apple's removed AGL framework, so the Mac uses Homebrew's
+      # Qt instead (built against the current SDK).
+      - name: Install Qt 6 (Windows / Linux)
+        if: runner.os != 'macOS'
         uses: jurplel/install-qt-action@v4
         with:
           version: '6.8.*'
@@ -36,6 +40,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgl1-mesa-dev libxkbcommon-dev
+
+      - name: Install Qt 6 (macOS, Homebrew)
+        if: runner.os == 'macOS'
+        run: |
+          brew install qt
+          echo "CMAKE_PREFIX_PATH=$(brew --prefix qt)" >> "$GITHUB_ENV"
 
       - name: Configure
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
@@ -50,4 +60,5 @@ jobs:
           path: |
             build/Release/AudioBitrateGUI.exe
             build/AudioBitrateGUI
+            build/AudioBitrateGUI.app
           if-no-files-found: ignore
