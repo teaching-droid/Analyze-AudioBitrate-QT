@@ -1,0 +1,25 @@
+# Build output
+/build/
+/build-*/
+*.user
+
+# Compiled translations (generated from the .ts files at build time)
+*.qm
+
+# Qt / MSVC intermediates
+*.obj
+*.o
+*.moc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+*.exe
+*.pdb
+*.ilk
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+*.vcxproj*
+*.sln
